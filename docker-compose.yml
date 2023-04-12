@@ -1,0 +1,48 @@
+#build nesco auth service
+  nesco-auth-service:
+    #build directory
+    build: ../NESCO_AuthService_QA/
+    #docker image name
+    image: nesco-auth-service
+    #docker container name
+    container_name: nesco-auth-service
+    #ports which have to be published
+    ports:
+      - "3001:3001"
+    mem_limit: 1g
+    mem_reservation: 256m
+    restart: unless-stopped
+    #environment variables for the environment
+    environment:
+      #data base host 
+      - DB_HOST=DATABASE_BASE_URL
+      #host url, should always be 0.0.0.0 DO NOT CHANGE 
+      - HOST=0.0.0.0
+      #port for mysql connection
+      - PORT=3306
+      #mysql username
+      - USER=auth_db_user
+      #mysql password
+      - PASSWORD=auth_db_password
+      #mysql database to be used
+      - DATABASE=AuthManager
+      #application run port. same has to be exposed at container level
+      - RUNPORT=3001
+      #application url
+      - APP_URL=ENVIRONMENT_BASE_URL
+      - APP_DOMAIN_URL=APP_DOMAIN_URL_VALUE
+      #secret keys for token generation
+      - RESET_PASSWORD_SECRET=-KaPdAD$$MbQeThWm
+      - BEARER_SECRET=UkXp2s5v8y/B?E(H+MbQeShVmYq3t6w9 
+      #KeyCloak Keys
+      - KEY_CLOAK_URL=KEY_CLOAK_URL_VALUE
+      - KEYCLOAK_CLIENT_ID=CLIENT_ID_KEYCLOAK
+      - KEYCLOAK_USERNAME=USER_NAME_KEYCLOAK
+      - KEYCLOAK_REALM=REALM_VALUE
+      - KEYCLOAK_PASSWORD=PASSWORD_KEYCLOAK
+      - OTP_PASSWORD_TAG=DOCKER_OTP_PASSWORD_VALUE
+      - KEYCLOAK_CLIENT_SECRET_KEY=KEYCLOAK_CLIENT_SECRET_VALUE
+      #hazelcast values
+      - HAZELCAST_HOST_PORT=HAZELCAST_HOST_PORT_VALUE
+      - HAZELCAST_GET_ACCOUNT_DETAILS_EXPIRY_TIME=16
+      - HAZELCAST_GET_DROPDOWN_DETAILS_EXPIRY_TIME=1440
