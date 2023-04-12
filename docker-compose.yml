@@ -1,48 +1,73 @@
-#build nesco auth service
-  nesco-auth-service:
+#build nesco admin service
+  nesco-admin-service:
     #build directory
-    build: ../NESCO_AuthService_QA/
+    build: ../NESCO_Adminservice_QA/
     #docker image name
-    image: nesco-auth-service
+    image: nesco-admin-service
     #docker container name
-    container_name: nesco-auth-service
-    #ports which have to be published
+    container_name: nesco-admin-service
+    #ports to be exposed
     ports:
-      - "3001:3001"
-    mem_limit: 1g
-    mem_reservation: 256m
+      - "3002:3002"
+    mem_limit: 1500m
+    mem_reservation: 512m
     restart: unless-stopped
-    #environment variables for the environment
+    #environment variables
     environment:
-      #data base host 
+       #data base host 
       - DB_HOST=DATABASE_BASE_URL
-      #host url, should always be 0.0.0.0 DO NOT CHANGE 
+      #host url : should always be 0.0.0.0. DO NOT CHANGE 
       - HOST=0.0.0.0
       #port for mysql connection
       - PORT=3306
       #mysql username
-      - USER=auth_db_user
+      - USER=admin_db_user
       #mysql password
-      - PASSWORD=auth_db_password
+      - PASSWORD=admin_db_password
       #mysql database to be used
-      - DATABASE=AuthManager
+      - DATABASE=ADSSManager
       #application run port. same has to be exposed at container level
-      - RUNPORT=3001
+      - RUNPORT=3002
       #application url
       - APP_URL=ENVIRONMENT_BASE_URL
       - APP_DOMAIN_URL=APP_DOMAIN_URL_VALUE
       #secret keys for token generation
-      - RESET_PASSWORD_SECRET=-KaPdAD$$MbQeThWm
-      - BEARER_SECRET=UkXp2s5v8y/B?E(H+MbQeShVmYq3t6w9 
-      #KeyCloak Keys
-      - KEY_CLOAK_URL=KEY_CLOAK_URL_VALUE
-      - KEYCLOAK_CLIENT_ID=CLIENT_ID_KEYCLOAK
-      - KEYCLOAK_USERNAME=USER_NAME_KEYCLOAK
-      - KEYCLOAK_REALM=REALM_VALUE
-      - KEYCLOAK_PASSWORD=PASSWORD_KEYCLOAK
-      - OTP_PASSWORD_TAG=DOCKER_OTP_PASSWORD_VALUE
-      - KEYCLOAK_CLIENT_SECRET_KEY=KEYCLOAK_CLIENT_SECRET_VALUE
+      - AWS_ACCESS_KEY_ID=ACCESS_KEY
+      - AWS_SECRET_ACCESS_KEY=SECRET_KEY
+      - AWS_REGION=REGION
+      #change the provider based on client
+      - SNS_PROVIDER=AWS
+      - SNS_SERVICE=DLT_SMS
+      - AWS_SNS_MOCK_CONFIG=AWS_SNS_MOCK_CONFIG_VALUE
+      - SNS_DLT_SEND_URL=SNS_DLT_SEND_URL_VALUE
+      - SNS_DLT_STATUS_URL=SNS_DLT_STATUS_URL_VALUE
+      - SNS_DLT_USERNAME=SNS_USERNAME
+      - SNS_DLT_PASSWORD=SNS_PASSWORD
+      - SNS_DLT_FROM=SNS_DLT_FROM_VALUE
+      #file upload path for assets
+      - ASSET_MANAGER_FILE_UPLOAD_PATH=./src/assets
+      - ASSET_MANAGER_FILE_MAX_SIZE=10000000
+      - ASSET_MANAGER_FILE_MAX_LIMIT=5
+      #Rockt chat settings
+      - ROCKET_CHAT_USERNAME=ROCKET_CHAT_USERNAME_VALUE
+      - ROCKET_CHAT_USER_PASSWORD=ROCKET_CHAT_USER_PASSWORD_VALUE
+      #SMTP settings
+      - SMTP_MAIL_ID=SMTP_MAIL_ID_VALUE
+      - SMTP_MAIL_HOST=SMTP_MAIL_HOST_VALUE
+      - SMTP_MAIL_PORT=SMTP_MAIL_PORT_VALUE
+      - SMTP_MAIL_USER=SMTP_MAIL_USER_VALUE
+      - SMTP_MAIL_PASSWORD=SMTP_MAIL_PASSWORD_VALUE
+      - SMTP_MOCK_CONFIG=SMTP_MOCK_CONFIG_VALUE
+      - SMTP_MAIL_SECURE=SMTP_MAIL_SECURE_VALUE
       #hazelcast values
       - HAZELCAST_HOST_PORT=HAZELCAST_HOST_PORT_VALUE
       - HAZELCAST_GET_ACCOUNT_DETAILS_EXPIRY_TIME=16
       - HAZELCAST_GET_DROPDOWN_DETAILS_EXPIRY_TIME=1440
+      #elasticsearch variables
+      - ELASTIC_SEARCH_URL=ELASTIC_SEARCH_URL_VALUE
+      - KEYCLOAK_CLIENT_SECRET_KEY=KEYCLOAK_CLIENT_SECRET_VALUE
+      - SEARCH_SCHEDULER_INTERVAL=SEARCH_SCHEDULER_INTERVAL_VALUE
+      - TENANT_CODE=BASE_TENANT_CODE
+      #elasticsearch authentication
+      - ELASTIC_SEARCH_USER=ELASTIC_SEARCH_USER_VALUE
+      - ELASTIC_SEARCH_PASSWORD=ELASTIC_SEARCH_PASSWORD_VALUE
